@@ -390,7 +390,11 @@ class Row : public Element {
 public:
     Row() : Element("tr") {}
 
-    Row&& operator<<(Element&& aElement) = delete;
+    Row&& operator<<(Element&& aElement) {
+        mChildren.push_back(std::move(aElement));
+        return std::move(*this);
+    }
+
     Row&& operator<<(ColHeader&& aCol) {
         mChildren.push_back(std::move(aCol));
         return std::move(*this);
